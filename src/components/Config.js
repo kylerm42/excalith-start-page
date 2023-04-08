@@ -5,178 +5,178 @@ import { useSettings } from "@/context/settings"
 import dynamic from "next/dynamic"
 
 async function getTheme(themeName) {
-	try {
-		const theme = await fetch("/themes/" + themeName + ".json").then((res) => res.json())
-		return theme
-	} catch {
-		return null
-	}
+  try {
+    const theme = await fetch("/themes/" + themeName + ".json").then((res) => res.json())
+    return theme
+  } catch {
+    return null
+  }
 }
 
 async function getThemes() {
-	try {
-		const themes = await fetch("/themes.json").then((res) => res.json())
-		return themes
-	} catch {
-		console.log("Error fetching themes")
-		return null
-	}
+  try {
+    const themes = await fetch("/themes.json").then((res) => res.json())
+    return themes
+  } catch {
+    console.log("Error fetching themes")
+    return null
+  }
 }
 
 const Config = ({ commands, closeCallback }) => {
-	const [command] = useState(commands.join(" "))
-	const [consoleLog, setConsoleLog] = useState([])
-	const [isDone, setDone] = useState(false)
-	const [isEditMode, setIsEditMode] = useState(false)
-	const { settings, setSettings, resetSettings } = useSettings()
-	const CodeEditor = dynamic(() => import("@/components/Editor"), {
-		ssr: false
-	})
+  const [command] = useState(commands.join(" "))
+  const [consoleLog, setConsoleLog] = useState([])
+  const [isDone, setDone] = useState(false)
+  const [isEditMode, setIsEditMode] = useState(false)
+  const { settings, setSettings, resetSettings } = useSettings()
+  const CodeEditor = dynamic(() => import("@/components/Editor"), {
+    ssr: false,
+  })
 
-	useEffect(() => {
-		setConsoleLog([])
+  useEffect(() => {
+    setConsoleLog([])
 
-		const cmd = commands[1]
-		if (cmd === "import" && commands.length === 3 && isURL(commands[2])) {
-			importConfig(commands[2])
-		} else if (cmd === "edit") {
-			editConfig()
-		} else if (cmd === "reset") {
-			resetConfig()
-		} else if (cmd === "theme") {
-			if (commands.length === 3) {
-				const themeName = commands[2]
-				getTheme(themeName).then((theme) => {
-					if (theme === null) {
-						invalidTheme(theme)
-					} else {
-						setTheme(theme, themeName)
-					}
-				})
-			} else {
-				getThemes().then((themes) => {
-					appendToLog("Available themes:")
-					for (let i in themes) {
-						appendToLog(themes[i])
-					}
-					setDone(true)
-				})
-			}
-		} else {
-			invalidCommand()
-		}
-	}, [])
+    const cmd = commands[1]
+    if (cmd === "import" && commands.length === 3 && isURL(commands[2])) {
+      importConfig(commands[2])
+    } else if (cmd === "edit") {
+      editConfig()
+    } else if (cmd === "reset") {
+      resetConfig()
+    } else if (cmd === "theme") {
+      if (commands.length === 3) {
+        const themeName = commands[2]
+        getTheme(themeName).then((theme) => {
+          if (theme === null) {
+            invalidTheme(theme)
+          } else {
+            setTheme(theme, themeName)
+          }
+        })
+      } else {
+        getThemes().then((themes) => {
+          appendToLog("Available themes:")
+          for (let i in themes) {
+            appendToLog(themes[i])
+          }
+          setDone(true)
+        })
+      }
+    } else {
+      invalidCommand()
+    }
+  }, [])
 
-	const importConfig = (url) => {
-		appendToLog("Fetching settings from remote", "success")
-		fetch(url)
-			.then((res) => {
-				if (!res.ok) {
-					appendToLog("File not found on URL", "error")
-					throw Error(message)
-				}
+  const importConfig = (url) => {
+    appendToLog("Fetching settings from remote", "success")
+    fetch(url)
+      .then((res) => {
+        if (!res.ok) {
+          appendToLog("File not found on URL", "error")
+          throw Error(message)
+        }
 
-				return res.json()
-			})
-			.then((data) => {
-				setSettings(data)
-				appendToLog("Successfully saved to local storage", "success")
-			})
-			.catch((err) => {
-				appendToLog(err, true)
-			})
-			.finally(() => {
-				setDone(true)
-			})
-	}
+        return res.json()
+      })
+      .then((data) => {
+        setSettings(data)
+        appendToLog("Successfully saved to local storage", "success")
+      })
+      .catch((err) => {
+        appendToLog(err, true)
+      })
+      .finally(() => {
+        setDone(true)
+      })
+  }
 
-	const resetConfig = () => {
-		appendToLog("Reverted back to default configuration", "success")
-		resetSettings()
-		setDone(true)
-	}
+  const resetConfig = () => {
+    appendToLog("Reverted back to default configuration", "success")
+    resetSettings()
+    setDone(true)
+  }
 
-	const editConfig = () => {
-		setIsEditMode(true)
-	}
+  const editConfig = () => {
+    setIsEditMode(true)
+  }
 
-	const invalidCommand = () => {
-		appendToLog("Invalid config command: " + commands.join(" "), "error")
-		appendToLog("Usage:")
-		appendToLog("config import <url>: Import remote config")
-		appendToLog("config theme <theme-name>: Switch theme")
-		appendToLog("config edit: Edit local config")
-		appendToLog("config reset: Reset to default config")
-		setDone(true)
-	}
+  const invalidCommand = () => {
+    appendToLog("Invalid config command: " + commands.join(" "), "error")
+    appendToLog("Usage:")
+    appendToLog("config import <url>: Import remote config")
+    appendToLog("config theme <theme-name>: Switch theme")
+    appendToLog("config edit: Edit local config")
+    appendToLog("config reset: Reset to default config")
+    setDone(true)
+  }
 
-	const invalidTheme = (themeName) => {
-		appendToLog("Invalid theme: " + commands[2], "error")
-		appendToLog("Usage:")
-		appendToLog("config theme: Show available themes")
-		appendToLog("config theme <theme>: Set theme")
-		setDone(true)
-	}
+  const invalidTheme = (themeName) => {
+    appendToLog("Invalid theme: " + commands[2], "error")
+    appendToLog("Usage:")
+    appendToLog("config theme: Show available themes")
+    appendToLog("config theme <theme>: Set theme")
+    setDone(true)
+  }
 
-	function setTheme(themeData, themeName) {
-		let newSettings = Object.assign({}, settings)
-		newSettings.theme = themeData
-		setSettings(newSettings)
-		appendToLog("Theme set to " + themeName, "success")
-		setDone(true)
-	}
+  function setTheme(themeData, themeName) {
+    let newSettings = Object.assign({}, settings)
+    newSettings.theme = themeData
+    setSettings(newSettings)
+    appendToLog("Theme set to " + themeName, "success")
+    setDone(true)
+  }
 
-	const appendToLog = (text, type) => {
-		setConsoleLog((consoleLog) => [...consoleLog, { type: type, text: text }])
-	}
+  const appendToLog = (text, type) => {
+    setConsoleLog((consoleLog) => [...consoleLog, { type: type, text: text }])
+  }
 
-	function closeConfigWindow() {
-		if (isEditMode) return
+  function closeConfigWindow() {
+    if (isEditMode) return
 
-		setIsEditMode(false)
-		closeCallback()
-	}
+    setIsEditMode(false)
+    closeCallback()
+  }
 
-	return (
-		<div className="h-full overflow-y-auto text-white" onClick={closeConfigWindow}>
-			<div className="row">
-				<ul className="list-none">
-					<li>
-						<Prompt />
-						{command}
-					</li>
-				</ul>
-				{isEditMode ? (
-					<>
-						<CodeEditor />
-					</>
-				) : (
-					<ul className="list-none mt-line">
-						{consoleLog.map((data, index) => {
-							return (
-								<li key={index}>
-									{data.type === "error" && (
-										<p>
-											<span className="text-red">[✖] </span>
-											{data.text}
-										</p>
-									)}
-									{data.type === "success" && (
-										<p>
-											<span className="text-green">[✓] </span>
-											{data.text}
-										</p>
-									)}
-									{data.type === undefined && <p>{data.text}</p>}
-								</li>
-							)
-						})}
-						{isDone && <li className="mt-line">Press ESC to continue...</li>}
-					</ul>
-				)}
-			</div>
-		</div>
-	)
+  return (
+    <div className="h-full overflow-y-auto text-white" onClick={closeConfigWindow}>
+      <div className="row">
+        <ul className="list-none">
+          <li>
+            <Prompt />
+            {command}
+          </li>
+        </ul>
+        {isEditMode ? (
+          <>
+            <CodeEditor />
+          </>
+        ) : (
+          <ul className="list-none mt-line">
+            {consoleLog.map((data, index) => {
+              return (
+                <li key={index}>
+                  {data.type === "error" && (
+                    <p>
+                      <span className="text-red">[✖] </span>
+                      {data.text}
+                    </p>
+                  )}
+                  {data.type === "success" && (
+                    <p>
+                      <span className="text-green">[✓] </span>
+                      {data.text}
+                    </p>
+                  )}
+                  {data.type === undefined && <p>{data.text}</p>}
+                </li>
+              )
+            })}
+            {isDone && <li className="mt-line">Press ESC to continue...</li>}
+          </ul>
+        )}
+      </div>
+    </div>
+  )
 }
 
 export default Config
