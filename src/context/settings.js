@@ -17,6 +17,11 @@ export const SettingsProvider = ({ children }) => {
     const settings = localStorage.getItem(SETTINGS_KEY)
     if (settings && settings !== "undefined") {
       try {
+        const jsonSettings = JSON.parse(settings)
+        const links = jsonSettings.sections.flatMap((section) => ({
+          ...section.links,
+          section: section.name,
+        }))
         setSettings(JSON.parse(settings))
       } catch (e) {
         setSettings(defaultConfig)
