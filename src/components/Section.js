@@ -4,6 +4,7 @@ const Section = ({ section }) => {
   section = {
     align: "left",
     maxLinks: 5,
+    links: [],
     ...section,
   }
 

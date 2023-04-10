@@ -13,21 +13,16 @@ const List = () => {
     setCommand(e.target.value)
   }
 
-  const links = fuzzysort.go(command, section.links, {
+  console.log(settings)
+  const links = fuzzysort.go(command, settings.links, {
     keys: ["name", "alias"],
     all: true,
   })
 
   const filteredSections = settings.sections.map((section) => {
-    const links = groupBy(section.links, "name")
     return {
       ...section,
-      links: fuzzysort.go(command, section.links, {
-        keys: ["name", "alias"],
-        limit: section.maxLinks || 5,
-        // threshold: -10000,
-        all: true,
-      }),
+      links: groupBy(links, "section")
     }
   })
 

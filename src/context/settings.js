@@ -22,7 +22,7 @@ export const SettingsProvider = ({ children }) => {
           ...section.links,
           section: section.name,
         }))
-        setSettings(JSON.parse(settings))
+        setSettings({ ...jsonSettings, links })
       } catch (e) {
         setSettings(defaultConfig)
         console.log("Error parsing settings, resetting to default")
