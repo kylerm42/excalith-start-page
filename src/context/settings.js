@@ -18,10 +18,12 @@ export const SettingsProvider = ({ children }) => {
     if (settings && settings !== "undefined") {
       try {
         const jsonSettings = JSON.parse(settings)
-        const links = jsonSettings.sections.flatMap((section) => ({
-          ...section.links,
-          section: section.name,
-        }))
+        const links = jsonSettings.sections.flatMap((section) => {
+          return section.links.map((link) => ({
+            ...link,
+            section: section.title,
+          }))
+        })
         setSettings({ ...jsonSettings, links })
       } catch (e) {
         setSettings(defaultConfig)

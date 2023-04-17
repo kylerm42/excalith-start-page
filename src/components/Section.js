@@ -1,14 +1,13 @@
 import Link from "@/components/Link"
 
-const Section = ({ section }) => {
+const Section = ({ section, links }) => {
   section = {
     align: "left",
     maxLinks: 5,
-    links: [],
     ...section,
   }
 
-  console.log(section)
+  console.log("section", links)
 
   return (
     <div className={`mb-4 align-${section.align}`}>
@@ -16,9 +15,9 @@ const Section = ({ section }) => {
         {section.title}
       </h2>
 
-      {section.links.map((link, index) => {
+      {links?.slice(0, section.maxLinks).map((link, index) => {
         {
-          return <Link className="font-normal" key={index} linkData={link.obj} />
+          return <Link className="font-normal" key={index} linkData={link} />
         }
       })}
     </div>

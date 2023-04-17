@@ -89,3 +89,10 @@ a:hover {
 .ace_gutter {
 	background-color: var(--window-color) !important;
 }
+
+.rank-0{
+	border-color: var(--magenta) !important;
+	border: 1px solid;
+	border-radius: 0.5rem;
+	background-color: rgba(255, 255, 255, 0.1);
+}

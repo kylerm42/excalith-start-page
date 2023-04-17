@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { Icon } from "@iconify/react"
-import * as fuzzysort from "fuzzysort"
 
-const Link = ({ linkData, filter }) => {
-  const { name, url, icon, target } = linkData
+const Link = ({ linkData }) => {
+  const { name, url, icon, target, rank } = linkData
 
   return (
-    <a className={`block`} href={url} rel="noopener noreferrer nofollow" target={target}>
+    <a
+      className={`block rank-${rank}`}
+      href={url}
+      rel="noopener noreferrer nofollow"
+      target={target}
+    >
       <span className="inline-block w-4 h-4 align-middle">
         <Icon icon={icon} />
       </span>

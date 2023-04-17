@@ -13,24 +13,41 @@ const List = () => {
     setCommand(e.target.value)
   }
 
-  console.log(settings)
-  const links = fuzzysort.go(command, settings.links, {
-    keys: ["name", "alias"],
-    all: true,
-  })
+  console.log("settings.links", settings.links)
 
-  const filteredSections = settings.sections.map((section) => {
-    return {
-      ...section,
-      links: groupBy(links, "section")
-    }
-  })
+  const links = fuzzysort
+    .go(command, settings.links, {
+      keys: ["name", "alias"],
+      all: true,
+    })
+    .map((link) => ({
+      ...link.obj,
+      score: Math.max(link.filter((l) => l).map((l) => l.score)),
+    }))
+    .sort((a, b) => b.score - a.score)
+    .map((link, index) => ({
+      ...link,
+      rank: index,
+    }))
+
+  console.log("links", links)
+
+  const groupedLinks = groupBy(links, "section")
+
+  console.log("groupedLinks", groupedLinks)
 
   return (
     <div id="list">
       <div className="grid grid-cols-3 gap-4 px-3 py-2 mb-5">
-        {filteredSections.map((section, index) => {
-          return <Section key={index} section={section} links={links} filter={command} />
+        {settings.sections.map((section, index) => {
+          return (
+            <Section
+              key={index}
+              section={section}
+              links={groupedLinks[section.title]}
+              filter={command}
+            />
+          )
         })}
       </div>
       <Search prompt={settings.prompt} commandChange={handleCommandChange} />
