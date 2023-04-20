@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { groupBy } from "lodash"
 import * as fuzzysort from "fuzzysort"
 import Search from "@/components/Search"
@@ -6,17 +6,19 @@ import Section from "@/components/Section"
 import { useSettings } from "@/context/settings"
 
 const List = () => {
-  const [command, setCommand] = useState("")
+  const [query, setQuery] = useState("")
   const { settings } = useSettings()
 
-  const handleCommandChange = (e) => {
-    setCommand(e.target.value)
+  const handleQueryChange = (input) => {
+    setQuery(input)
   }
 
-  console.log("settings.links", settings.links)
+  const handleSelectionChange = (idx) => {
+    console.log("idx", idx)
+  }
 
   const links = fuzzysort
-    .go(command, settings.links, {
+    .go(query, settings.links, {
       keys: ["name", "alias"],
       all: true,
     })
@@ -29,28 +31,23 @@ const List = () => {
       ...link,
       rank: index,
     }))
-
-  console.log("links", links)
-
   const groupedLinks = groupBy(links, "section")
 
-  console.log("groupedLinks", groupedLinks)
+  const sections = query
+    ? [{ title: "Links", color: "violet", links }]
+    : settings.sections.map((section) => ({
+        ...section,
+        links: groupedLinks[section.title],
+      }))
 
   return (
-    <div id="list">
-      <div className="grid grid-cols-3 gap-4 px-3 py-2 mb-5">
-        {settings.sections.map((section, index) => {
-          return (
-            <Section
-              key={index}
-              section={section}
-              links={groupedLinks[section.title]}
-              filter={command}
-            />
-          )
+    <div id="list" className="h-full flex flex-col">
+      <div className="grid grid-cols-3 gap-4 px-3 py-2 mb-5 grow">
+        {sections.map((section, index) => {
+          return <Section key={index} section={section} links={section.links} />
         })}
       </div>
-      <Search prompt={settings.prompt} commandChange={handleCommandChange} />
+      <Search onQueryChange={handleQueryChange} onSelectionChange={handleSelectionChange} />
     </div>
   )
 }

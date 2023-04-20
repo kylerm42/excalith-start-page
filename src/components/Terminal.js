@@ -5,7 +5,7 @@ import Config from "@/components/Config"
 import Fetch from "@/components/Fetch"
 import { useSettings } from "@/context/settings"
 import { subscribe, unsubscribe } from "@/utils/event"
-import { RunCommand } from "@/utils/command"
+import { runCommand } from "@/utils/command"
 
 const Terminal = () => {
   const windowRef = useRef(null)
@@ -36,7 +36,7 @@ const Terminal = () => {
   }, [settings])
 
   const closeWindow = () => {
-    RunCommand("list", settings)
+    runCommand("list", settings)
   }
 
   const getWindow = () => {
@@ -49,7 +49,7 @@ const Terminal = () => {
     } else if (cmd === "fetch") {
       return <Fetch closeCallback={closeWindow} />
     } else {
-      return <List />
+      return <List links={settings.links} sections={settings.sections} />
     }
   }
 

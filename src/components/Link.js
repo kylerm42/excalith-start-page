@@ -2,11 +2,13 @@ import React from "react"
 import { Icon } from "@iconify/react"
 
 const Link = ({ linkData }) => {
-  const { name, url, icon, target, rank } = linkData
+  const { name, url, icon, target, rank, isSelected } = linkData
 
   return (
     <a
-      className={`block rank-${rank}`}
+      className={`block rank-${rank} ml-2 leading-2 my-1 px-1 rounded-selection ${
+        isSelected ? "selected" : ""
+      }`}
       href={url}
       rel="noopener noreferrer nofollow"
       target={target}

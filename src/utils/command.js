@@ -4,7 +4,7 @@ import { publish } from "@/utils/event"
 
 const registeredCommands = ["list", "help", "fetch", "config"]
 
-export function RunCommand(command, settings) {
+export function runCommand(command, settings) {
   if (command === "") return false
   const cmd_split = command.split(" ")
 
