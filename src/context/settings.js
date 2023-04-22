@@ -24,7 +24,14 @@ export const SettingsProvider = ({ children }) => {
             section: section.title,
           }))
         })
-        setSettings({ ...jsonSettings, links })
+        const defaults = {
+          MAX_SEARCH_RESULTS: 10,
+          SECTION_DEFAULTS: {
+            maxLinks: 5,
+            align: "left",
+          },
+        }
+        setSettings({ ...jsonSettings, ...defaults, links })
       } catch (e) {
         setSettings(defaultConfig)
         console.log("Error parsing settings, resetting to default")
@@ -40,8 +47,8 @@ export const SettingsProvider = ({ children }) => {
     }
   }, [settings])
 
-  const updateSettings = async (newSettings) => {
-    await setSettings(newSettings)
+  const updateSettings = (newSettings) => {
+    setSettings(newSettings)
   }
 
   const resetSettings = () => {

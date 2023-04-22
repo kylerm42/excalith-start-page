@@ -18,11 +18,13 @@ module.exports = {
     },
     borderRadius: {
       terminal: "0.625rem",
+      selection: "0.2rem",
     },
     colors: {
       "background-color": "var(--background-color)",
       "window-color": "var(--window-color)",
       "glow-color": "var(--glow-color)",
+      transparent: "#00000000",
       white: "var(--white)",
       gray: "var(--gray)",
       black: "var(--black)",
@@ -45,8 +47,14 @@ module.exports = {
       margin: {
         line: "1.4rem",
       },
+      spacing: {
+        full: "100%",
+      },
       animation: {
         fadeIn: "fadeIn 0.15s ease-in-out",
+      },
+      blur: {
+        wallpaper: "8px",
       },
       keyframes: () => ({
         fadeIn: {

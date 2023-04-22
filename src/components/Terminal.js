@@ -14,13 +14,6 @@ const Terminal = () => {
   const { settings } = useSettings()
 
   useEffect(() => {
-    if (settings.terminal.fixedHeight) {
-      const clientHeight = windowRef.current.clientHeight
-      setWindowHeight({
-        height: clientHeight,
-      })
-    }
-
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         closeWindow()
@@ -34,6 +27,20 @@ const Terminal = () => {
       document.removeEventListener("keydown", handleKeyDown)
     }
   }, [settings])
+
+  const handleListLoad = () => {
+    // sets the height of the terminal once all the sections and links have been filtered
+    // need the timeout because js is stupid
+    setTimeout(() => {
+      console.log("list loaded", windowRef.current.clientHeight)
+      if (settings.terminal.fixedHeight) {
+        const clientHeight = windowRef.current.clientHeight
+        setWindowHeight({
+          height: clientHeight,
+        })
+      }
+    }, 100)
+  }
 
   const closeWindow = () => {
     runCommand("list", settings)
@@ -49,7 +56,7 @@ const Terminal = () => {
     } else if (cmd === "fetch") {
       return <Fetch closeCallback={closeWindow} />
     } else {
-      return <List links={settings.links} sections={settings.sections} />
+      return <List onLoad={handleListLoad} />
     }
   }
 

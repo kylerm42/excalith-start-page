@@ -19,9 +19,13 @@ const Search = ({ onQueryChange, onSelectionChange }) => {
       } else if (event.code === "Escape") {
         inputRef.current.value = ""
         onQueryChange("")
+        onSelectionChange("reset")
+      } else if (event.shiftKey && event.key === "Tab") {
+        event.preventDefault()
+        onSelectionChange("decrement")
       } else if (event.key === "Tab") {
         event.preventDefault()
-        onSelectionChange(1)
+        onSelectionChange("increment")
       }
     }
 

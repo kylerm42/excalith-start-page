@@ -45,7 +45,8 @@ const defaultConfig = {
     hoverColor: "violet",
   },
   search: {
-    default: "https://google.com/search?q=",
+    default:
+      "https://whoogle.l.talos.one/search?preferences=uG7EFAIzDdIs9R87gSShURq3tVdInc0QjjelUhnoJ8-TRNh4hsznXk3olh-WRE712QBmR8fn_7514GEX64zCg8J-O_3f_WLNJY9lex0u0iLIM01SWa67BGlZ-Oxl7Cr-_yHS_3GgF_rwCwn0x-2fNNNVQBqvgZGDagu2mROgipPmIEbIXQ4R1jw3MWi-K_pjBSf_HMB3n46jr9VAb6GT_okUFmsgvJUz-3ZrUn1YMQADYLd8___Jhqqc0SlUsyyjJcgi279u6F6vNxpyWH9XjFCyWlQAxoUUk5caciVkkcjeXWPEzI86IRDIyFCO7eplBkXSiHjRiKQXzjwM0VSGFkqyg4wcEv2ApNTEjfPjyyvtUEL_3IABQqyy8SAkljKx7UwHrHpIG1N6kMPDNzIh2sxW_Ts-bGWWUUyjD0RuVMFGlVoYojk9lx5IzbFEehUC1b5qWNvL11IBmZIW4AVakwVESwbl8MrVoW7myNid3MgexNRPE9fxO8NNNZRNSiNqNOG4wFHovarF3cPaHei04DtDIsoJ7RJh6jsjr_MluKFHU5gFCEDk6hBTCxvclNOYJ7FtuM3UN_jSt-ZelWRHWaF7AtDetGb1oPKSQN-Wld2NhgqZwqZR1Al9QpuWuNS1aPJWMjaAhCHriaHd900dD6zPvZXETYwd9-XhYshNARatrojTOAQ==&q=",
     target: "_self",
     shortcutRegex: "([A-Za-z0-9]+) (.*)",
     shortcuts: [
@@ -89,163 +90,198 @@ const defaultConfig = {
   sections: [
     {
       title: "General",
-      color: "green",
-      align: "left",
-      links: [
-        {
-          name: "Portfolio",
-          url: "https://cancellek.com",
-          icon: "mdi:web",
-        },
-        {
-          name: "Keybase",
-          url: "https://keybase.io/",
-          icon: "fa-brands:keybase",
-        },
-        {
-          name: "GPT",
-          url: "https://chat.openai.com/",
-          icon: "simple-icons:openai",
-        },
-        {
-          name: "OCI",
-          url: "https://www.oracle.com/cloud/",
-          icon: "simple-icons:oracle",
-        },
-      ],
-    },
-    {
-      title: "Dev",
-      color: "magenta",
-      align: "left",
-      links: [
-        {
-          name: "GitHub",
-          url: "https://github.com",
-          icon: "mdi:github",
-        },
-        {
-          name: "GitLab",
-          url: "https://gitlab.com",
-          icon: "ph:gitlab-logo-simple-fill",
-        },
-        {
-          name: "Dev.to",
-          url: "https://dev.to",
-          icon: "material-symbols:logo-dev",
-        },
-        {
-          name: "Stack Overflow",
-          url: "https://stackoverflow.com/",
-          icon: "mdi:stack-overflow",
-        },
-      ],
-    },
-    {
-      title: "Social",
       color: "violet",
       align: "left",
       links: [
         {
-          name: "Twitter",
-          url: "https://twitter.com",
-          icon: "mdi:twitter",
-        },
-        {
-          name: "Mastodon",
-          url: "https://mastodon.social/",
-          icon: "ri:mastodon-fill",
-        },
-        {
           name: "Reddit",
           url: "https://reddit.com",
-          icon: "mdi:reddit",
+          icon: "ic:baseline-reddit",
         },
         {
-          name: "Polywork",
-          url: "https://polywork.com",
-          icon: "simple-icons:polywork",
+          name: "Weather",
+          url: "https://www.wunderground.com/forecast/us/va/midlothian/KVAMIDLO136",
+          icon: "mdi:weather-partly-cloudy",
+        },
+        {
+          name: "ChatGPT",
+          url: "https://chat.openai.com/",
+          icon: "simple-icons:openai",
+        },
+        {
+          name: "Amazon",
+          url: "https://www.amazon.com/",
+          icon: "ri:amazon-fill",
         },
       ],
     },
     {
-      title: "Gaming",
-      color: "cyan",
-      align: "left",
-      links: [
-        {
-          name: "Polygon",
-          url: "https://polygon.com",
-          icon: "uil:polygon",
-        },
-        {
-          name: "IGN",
-          url: "https://ign.com",
-          icon: "mdi:currency-sign",
-        },
-        {
-          name: "RPS",
-          url: "https://rockpapershotgun.com/",
-          icon: "ph:toilet-paper-bold",
-        },
-        {
-          name: "80lv",
-          url: "https://80.lv/",
-          icon: "tabler:hand-rock",
-        },
-      ],
-    },
-    {
-      title: "Science",
+      title: "Avise Repos",
       color: "blue",
       align: "left",
       links: [
         {
-          name: "PopSci",
-          url: "https://popsci.com/",
-          icon: "material-symbols:science",
+          name: "Avise API",
+          url: "https://github.com/AviseInc/avise-api/",
+          icon: "ic:round-api",
         },
         {
-          name: "Space",
-          url: "fa6-solid:user-astronaut",
-          icon: "mdi:reddit",
+          name: "Avise Web",
+          url: "https://github.com/AviseInc/avise-web",
+          icon: "icon-park-outline:browser",
         },
         {
-          name: "NASA",
-          url: "https://blogs.nasa.gov/",
-          icon: "simple-icons:nasa",
+          name: "Gitops",
+          url: "https://github.com/AviseInc/gitops",
+          icon: "eos-icons:code-deploy-outlined",
         },
         {
-          name: "ESA",
-          url: "https://blogs.esa.int/",
-          icon: "mdi:black-mesa",
+          name: "QBO Sync",
+          url: "https://github.com/AviseInc/qbo-sync-service",
+          icon: "material-symbols:sync-rounded",
+        },
+        {
+          name: "Codat Sync",
+          url: "https://github.com/AviseInc/codat-sync-service",
+          icon: "material-symbols:sync-rounded",
         },
       ],
     },
     {
-      title: "Tech",
-      color: "yellow",
+      title: "Avise Resources",
+      color: "blue",
       align: "left",
       links: [
         {
-          name: "TechCrunch",
-          url: "https://techcrunch.com/",
-          icon: "game-icons:techno-heart",
+          name: "JIRA",
+          url: "https://aviseinc.atlassian.net/jira/software/c/projects/AA/boards/20",
+          icon: "mdi:jira",
         },
         {
-          name: "Verge",
-          url: "https://www.theverge.com/",
-          icon: "arcticons:verge",
+          name: "AWS SSO",
+          url: "https://avise.awsapps.com/start/",
+          icon: "cib:amazon-aws",
         },
         {
-          name: "It's Foss",
-          url: "https://itsfoss.com/",
-          icon: "ri:mastodon-fill",
+          name: "DataDog",
+          url: "https://app.datadoghq.com/help/quick_start",
+          icon: "simple-icons:datadog",
         },
         {
-          name: "9To5 Linux",
-          url: "https://9to5linux.com/",
-          icon: "uil:linux",
+          name: "ArgoCD",
+          url: "https://stackoverflow.com/",
+          icon: "simple-icons:argo",
+        },
+        {
+          name: "Auth0",
+          url: "https://manage.auth0.com/dashboard/us/avise-prod/",
+          icon: "cib:auth0",
+        },
+        {
+          name: "Notion",
+          url: "https://www.notion.so/avise/Engineering-ba1e49931dc74c45bd49358a4b21d892",
+          icon: "radix-icons:notion-logo",
+        },
+        {
+          name: "Quickbooks Online",
+          url: "https://developer.intuit.com/app/developer/sandbox",
+          icon: "simple-icons:quickbooks",
+        },
+        {
+          name: "Avise Dev",
+          url: "https://dev.avise.ai/",
+          icon: "material-symbols:logo-dev-rounded",
+        },
+        {
+          name: "Avise Prod",
+          url: "https://alpha.avise.com/",
+          icon: "ri:product-hunt-fill",
+        },
+      ],
+    },
+    {
+      title: "Finance",
+      color: "green",
+      align: "left",
+      links: [
+        {
+          name: "YNAB",
+          url: "https://app.ynab.com/",
+          icon: "arcticons:ynab",
+        },
+        {
+          name: "Capital One",
+          url: "https://myaccounts.capitalone.com/accountSummary",
+          icon: "material-symbols:credit-card-outline",
+        },
+        {
+          name: "Credit Karma",
+          url: "https://www.creditkarma.com/dashboard",
+          icon: "arcticons:credit-karma",
+        },
+      ],
+    },
+    {
+      title: "Homelab",
+      color: "orange",
+      align: "left",
+      links: [
+        {
+          name: "Aion",
+          url: "http://aion.l.talos.one/Dashboard",
+          icon: "simple-icons:unraid",
+        },
+        {
+          name: "Hestia",
+          url: "http://192.168.1.221:8123/lovelace/0",
+          icon: "mdi:home-assistant",
+        },
+        {
+          name: "Coeus",
+          url: "https://coeus.l.talos.one/",
+          icon: "material-symbols:router-outline-rounded",
+        },
+        {
+          name: "Metis",
+          url: "https://metis.l.talos.one/",
+          icon: "simple-icons:adguard",
+        },
+        {
+          name: "Athena",
+          url: "https://athena.l.talos.one/",
+          icon: "cib:nginx",
+        },
+      ],
+    },
+    {
+      title: "Media",
+      color: "violet",
+      align: "left",
+      links: [
+        {
+          name: "Plex",
+          url: "https://app.plex.tv/desktop/#!/",
+          icon: "mdi:plex",
+        },
+        {
+          name: "Overseerr",
+          url: "https://overseerr.l.talos.one/",
+          icon: "ri:eye-2-line",
+        },
+        {
+          name: "Radarr",
+          url: "https://radarr.l.talos.one/",
+          icon: "material-symbols:movie",
+        },
+        {
+          name: "Sonarr",
+          url: "https://sonarr.l.talos.one/",
+          icon: "ic:outline-tv",
+        },
+        {
+          name: "Tautulli",
+          url: "https://tautulli.l.talos.one/",
+          icon: "fluent:receipt-play-24-filled",
         },
       ],
     },
