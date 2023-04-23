@@ -4,11 +4,12 @@ import { publish } from "@/utils/event"
 
 const registeredCommands = ["list", "help", "fetch", "config"]
 
-export function runCommand(command, settings) {
-  if (command === "") return false
+export function runCommand(command, settings, links, highlightedLink) {
   const cmd_split = command.split(" ")
 
-  if (registeredCommands.includes(cmd_split[0])) {
+  if (highlightedLink >= 0) {
+    openLink(links[highlightedLink].url, links[highlightedLink].target)
+  } else if (registeredCommands.includes(cmd_split[0])) {
     publish("command", cmd_split)
   } else if (isURL(command)) {
     openLink("https://" + command, settings.urlLaunch.target)

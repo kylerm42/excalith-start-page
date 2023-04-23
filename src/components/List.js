@@ -4,6 +4,7 @@ import * as fuzzysort from "fuzzysort"
 import Search from "@/components/Search"
 import Section from "@/components/Section"
 import { useSettings } from "@/context/settings"
+import { runCommand } from "@/utils/command"
 
 const DEFAULTS = {
   maxSearchResults: 10,
@@ -39,6 +40,10 @@ const List = ({ onLoad }) => {
     }
   }
 
+  const handleCommand = (command) => {
+    runCommand(command, settings, links, highlightedLink)
+  }
+
   useEffect(() => {
     handleQueryChange("")
     onLoad()
@@ -72,7 +77,11 @@ const List = ({ onLoad }) => {
           return <Section key={index} section={section} />
         })}
       </div>
-      <Search onQueryChange={handleQueryChange} onSelectionChange={handleSelectionChange} />
+      <Search
+        onQueryChange={handleQueryChange}
+        onSelectionChange={handleSelectionChange}
+        onCommand={handleCommand}
+      />
     </div>
   )
 }

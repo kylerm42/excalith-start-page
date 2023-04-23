@@ -113,6 +113,17 @@ const defaultConfig = {
           url: "https://www.amazon.com/",
           icon: "ri:amazon-fill",
         },
+        {
+          name: "ESPN",
+          url: "https://www.espn.com/",
+          icon: "arcticons:espn",
+        },
+        {
+          name: "Premier League Table",
+          url: "https://www.premierleague.com/tables",
+          icon: "arcticons:premier-league",
+          alias: "plt",
+        },
       ],
     },
     {
