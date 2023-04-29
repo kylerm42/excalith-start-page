@@ -32,7 +32,6 @@ const Terminal = () => {
     // sets the height of the terminal once all the sections and links have been filtered
     // need the timeout because js is stupid
     setTimeout(() => {
-      console.log("list loaded", windowRef.current.clientHeight)
       if (settings.terminal.fixedHeight) {
         const clientHeight = windowRef.current.clientHeight
         setWindowHeight({

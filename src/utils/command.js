@@ -13,57 +13,25 @@ export function runCommand(command, settings, links, highlightedLink) {
     publish("command", cmd_split)
   } else if (isURL(command)) {
     openLink("https://" + command, settings.urlLaunch.target)
-  } else if (tryParseSearchShortcut(command, settings)) {
-    return
+  } else if (links.map((l) => l.alias).includes(command)) {
+    const link = links.find((link) => link.alias === command)
+    openLink(link.url, link.target)
+  } else if (
+    settings.search.engines.filter((shortcut) => command.startsWith(`${shortcut.alias} `)).length
+  ) {
+    const searchTest = `${e.alias} `
+    const engine = settings.search.engines.find((e) => command.startsWith(searchTest))
+    const query = command.replace(searchTest, "")
+
+    executeSearch(query, engine)
   } else {
-    openFilteredLinks(command, settings)
+    executeSearch(
+      command,
+      settings.search.engines.find((e) => e.default)
+    )
   }
 }
 
-function openFilteredLinks(command, settings) {
-  let filteredUrls = []
-  settings.sections.map((section) => {
-    {
-      section.links.map((link) => {
-        {
-          if (link.name.toLowerCase().includes(command)) {
-            filteredUrls.push(link.url)
-          }
-        }
-      })
-    }
-  })
-
-  let filterCount = filteredUrls.length
-  if (filterCount === 0) {
-    const defaultSerachEngine = settings.search.default
-    const target = settings.search.target
-    openLink(defaultSerachEngine + command, target)
-  } else {
-    filteredUrls.map((url, index) => {
-      openLink(url, index === filterCount - 1 ? "_self" : "_blank")
-    })
-  }
-}
-
-function tryParseSearchShortcut(command, settings) {
-  // Split command and query seperated by shortcut regex
-  var commandPattern = new RegExp(settings.search.shortcutRegex, "g")
-  let matchAll = command.matchAll(commandPattern)
-  matchAll = Array.from(matchAll)
-
-  if (matchAll.length === 0) return false
-
-  let regex_cmd = matchAll[0]
-  for (var i = 0; i < settings.search.shortcuts.length; i++) {
-    const commandData = settings.search.shortcuts[i]
-    const name = commandData.alias
-
-    if (name === regex_cmd[1]) {
-      const url = commandData.url
-      openLink(url.replace("{}", regex_cmd[2]), settings.urlLaunch.target)
-      return true
-    }
-  }
-  return false
+function executeSearch(query, engine) {
+  openLink(url.replace("{}", query), engine.target || settings.search.target)
 }

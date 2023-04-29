@@ -45,11 +45,15 @@ const defaultConfig = {
     hoverColor: "violet",
   },
   search: {
-    default:
-      "https://whoogle.l.talos.one/search?preferences=uG7EFAIzDdIs9R87gSShURq3tVdInc0QjjelUhnoJ8-TRNh4hsznXk3olh-WRE712QBmR8fn_7514GEX64zCg8J-O_3f_WLNJY9lex0u0iLIM01SWa67BGlZ-Oxl7Cr-_yHS_3GgF_rwCwn0x-2fNNNVQBqvgZGDagu2mROgipPmIEbIXQ4R1jw3MWi-K_pjBSf_HMB3n46jr9VAb6GT_okUFmsgvJUz-3ZrUn1YMQADYLd8___Jhqqc0SlUsyyjJcgi279u6F6vNxpyWH9XjFCyWlQAxoUUk5caciVkkcjeXWPEzI86IRDIyFCO7eplBkXSiHjRiKQXzjwM0VSGFkqyg4wcEv2ApNTEjfPjyyvtUEL_3IABQqyy8SAkljKx7UwHrHpIG1N6kMPDNzIh2sxW_Ts-bGWWUUyjD0RuVMFGlVoYojk9lx5IzbFEehUC1b5qWNvL11IBmZIW4AVakwVESwbl8MrVoW7myNid3MgexNRPE9fxO8NNNZRNSiNqNOG4wFHovarF3cPaHei04DtDIsoJ7RJh6jsjr_MluKFHU5gFCEDk6hBTCxvclNOYJ7FtuM3UN_jSt-ZelWRHWaF7AtDetGb1oPKSQN-Wld2NhgqZwqZR1Al9QpuWuNS1aPJWMjaAhCHriaHd900dD6zPvZXETYwd9-XhYshNARatrojTOAQ==&q=",
     target: "_self",
     shortcutRegex: "([A-Za-z0-9]+) (.*)",
-    shortcuts: [
+    engines: [
+      {
+        alias: "w",
+        name: "Whoogle Search",
+        url: "https://whoogle.l.talos.one/search?preferences=uG7EFAIzDdIs9R87gSShURq3tVdInc0QjjelUhnoJ8-TRNh4hsznXk3olh-WRE712QBmR8fn_7514GEX64zCg8J-O_3f_WLNJY9lex0u0iLIM01SWa67BGlZ-Oxl7Cr-_yHS_3GgF_rwCwn0x-2fNNNVQBqvgZGDagu2mROgipPmIEbIXQ4R1jw3MWi-K_pjBSf_HMB3n46jr9VAb6GT_okUFmsgvJUz-3ZrUn1YMQADYLd8___Jhqqc0SlUsyyjJcgi279u6F6vNxpyWH9XjFCyWlQAxoUUk5caciVkkcjeXWPEzI86IRDIyFCO7eplBkXSiHjRiKQXzjwM0VSGFkqyg4wcEv2ApNTEjfPjyyvtUEL_3IABQqyy8SAkljKx7UwHrHpIG1N6kMPDNzIh2sxW_Ts-bGWWUUyjD0RuVMFGlVoYojk9lx5IzbFEehUC1b5qWNvL11IBmZIW4AVakwVESwbl8MrVoW7myNid3MgexNRPE9fxO8NNNZRNSiNqNOG4wFHovarF3cPaHei04DtDIsoJ7RJh6jsjr_MluKFHU5gFCEDk6hBTCxvclNOYJ7FtuM3UN_jSt-ZelWRHWaF7AtDetGb1oPKSQN-Wld2NhgqZwqZR1Al9QpuWuNS1aPJWMjaAhCHriaHd900dD6zPvZXETYwd9-XhYshNARatrojTOAQ==&q={}",
+        default: true,
+      },
       {
         alias: "g",
         name: "Google Search",

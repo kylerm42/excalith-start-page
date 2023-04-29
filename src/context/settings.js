@@ -18,26 +18,13 @@ export const SettingsProvider = ({ children }) => {
     if (settings && settings !== "undefined") {
       try {
         const jsonSettings = JSON.parse(settings)
-        const links = jsonSettings.sections.flatMap((section) => {
-          return section.links.map((link) => ({
-            ...link,
-            section: section.title,
-          }))
-        })
-        const defaults = {
-          MAX_SEARCH_RESULTS: 10,
-          SECTION_DEFAULTS: {
-            maxLinks: 5,
-            align: "left",
-          },
-        }
-        setSettings({ ...jsonSettings, ...defaults, links })
+        setSettings(prepareConfig(jsonSettings))
       } catch (e) {
-        setSettings(defaultConfig)
+        setSettings(prepareConfig(defaultConfig))
         console.log("Error parsing settings, resetting to default")
       }
     } else {
-      setSettings(defaultConfig)
+      setSettings(prepareConfig(defaultConfig))
     }
   }, [])
 
@@ -48,12 +35,30 @@ export const SettingsProvider = ({ children }) => {
   }, [settings])
 
   const updateSettings = (newSettings) => {
-    setSettings(newSettings)
+    setSettings(prepareConfig(newSettings))
   }
 
   const resetSettings = () => {
-    setSettings(defaultConfig)
+    setSettings(prepareConfig(defaultConfig))
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(defaultConfig))
+  }
+
+  const prepareConfig = (settings) => {
+    const links = settings.sections.flatMap((section) => {
+      return section.links.map((link) => ({
+        ...link,
+        section: section.title,
+      }))
+    })
+    const defaults = {
+      MAX_SEARCH_RESULTS: 10,
+      SECTION_DEFAULTS: {
+        maxLinks: 5,
+        align: "left",
+      },
+    }
+
+    return { ...settings, ...defaults, links }
   }
 
   return (
