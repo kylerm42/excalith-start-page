@@ -29,10 +29,12 @@ const List = ({ onLoad }) => {
   const handleSelectionChange = (action) => {
     switch (action) {
       case "increment":
-        setHighlightedLink((highlightedLink + 1) % links.length)
+        const incAmount = links[0]?.score === 0 && highlightedLink < 0 ? 2 : 1
+        setHighlightedLink((highlightedLink + incAmount) % links.length)
         break
       case "decrement":
-        setHighlightedLink((highlightedLink + links.length - 1) % links.length)
+        const decAmount = highlightedLink < 0 ? 0 : 1
+        setHighlightedLink((highlightedLink + links.length - decAmount) % links.length)
         break
       case "reset":
         setHighlightedLink(-1)
@@ -51,7 +53,8 @@ const List = ({ onLoad }) => {
 
   useEffect(() => {
     // filter links by query
-    const filteredLinks = filterLinks(query, settings.links)
+    const filteredLinks = filterLinks(query, settings.links, highlightedLink)
+    console.log([...filteredLinks])
     // group by section
     const groupedLinks = groupBy(filteredLinks, "section")
     // limit links to section max
@@ -86,7 +89,19 @@ const List = ({ onLoad }) => {
   )
 }
 
-function filterLinks(query, links) {
+function filterLinks(query, links, highlightedLink) {
+  if (query === "qbo") {
+    const abc = fuzzysort
+      .go(query, links, {
+        keys: ["name", "alias"],
+        all: true,
+      })
+      .map((link) => ({
+        ...link.obj,
+        score: link.score,
+      }))
+    console.log(abc)
+  }
   return fuzzysort
     .go(query, links, {
       keys: ["name", "alias"],
@@ -94,13 +109,13 @@ function filterLinks(query, links) {
     })
     .map((link) => ({
       ...link.obj,
-      score: Math.max(link.filter((l) => l).map((l) => l.score)),
+      score: link.score,
     }))
     .sort((a, b) => b.score - a.score)
     .map((link, index) => ({
       ...link,
       rank: index,
-      isSelected: false,
+      isSelected: link.score === 0 && highlightedLink < 0,
     }))
 }
 

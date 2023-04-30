@@ -14,7 +14,7 @@ export const SettingsProvider = ({ children }) => {
   const [settings, setSettings] = useState()
 
   useEffect(() => {
-    const settings = localStorage.getItem(SETTINGS_KEY)
+    const settings = defaultConfig.usLocalStorage && localStorage.getItem(SETTINGS_KEY)
     if (settings && settings !== "undefined") {
       try {
         const jsonSettings = JSON.parse(settings)
@@ -30,7 +30,7 @@ export const SettingsProvider = ({ children }) => {
 
   useEffect(() => {
     if (settings && settings !== "undefined") {
-      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings))
+      setLocalStorage(SETTINGS_KEY, JSON.stringify(settings))
     }
   }, [settings])
 
@@ -40,7 +40,13 @@ export const SettingsProvider = ({ children }) => {
 
   const resetSettings = () => {
     setSettings(prepareConfig(defaultConfig))
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(defaultConfig))
+    setLocalStorage(SETTINGS_KEY, JSON.stringify(defaultConfig))
+  }
+
+  const setLocalStorage = (key, value) => {
+    if (defaultConfig.usLocalStorage) {
+      localStorage.setItem(key, value)
+    }
   }
 
   const prepareConfig = (settings) => {

@@ -16,12 +16,13 @@ export function runCommand(command, settings, links, highlightedLink) {
   } else if (links.map((l) => l.alias).includes(command)) {
     const link = links.find((link) => link.alias === command)
     openLink(link.url, link.target)
+  } else if (links[0].score === 0) {
+    openLink(links[0].url, links[0].target)
   } else if (
     settings.search.engines.filter((shortcut) => command.startsWith(`${shortcut.alias} `)).length
   ) {
-    const searchTest = `${e.alias} `
-    const engine = settings.search.engines.find((e) => command.startsWith(searchTest))
-    const query = command.replace(searchTest, "")
+    const engine = settings.search.engines.find((e) => command.startsWith(`${e.alias} `))
+    const query = command.replace(`${engine.alias} `, "")
 
     executeSearch(query, engine)
   } else {
@@ -33,5 +34,5 @@ export function runCommand(command, settings, links, highlightedLink) {
 }
 
 function executeSearch(query, engine) {
-  openLink(url.replace("{}", query), engine.target || settings.search.target)
+  openLink(engine.url.replace("{}", query), engine.target || "_self")
 }
