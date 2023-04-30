@@ -1,6 +1,6 @@
 const defaultConfig = {
   username: "Kyle",
-  usLocalStorage: false,
+  usLocalStorage: process.env.USE_LOCAL_STORAGE === "true",
   theme: {
     backgroundColor: "#121317",
     windowColor: "#1e212b",
