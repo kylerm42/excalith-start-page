@@ -170,6 +170,7 @@ const defaultConfig = {
           name: "Daily",
           urls: [
             "https://app.plex.tv/desktop/#!/",
+            "https://aion.l.talos.one/Docker",
             "https://overseerr.l.talos.one/requests",
             "https://radarr.l.talos.one/activity/history",
             "https://sonarr.l.talos.one/activity/history",
