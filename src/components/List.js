@@ -54,7 +54,6 @@ const List = ({ onLoad }) => {
   useEffect(() => {
     // filter links by query
     const filteredLinks = filterLinks(query, settings.links, highlightedLink)
-    console.log([...filteredLinks])
     // group by section
     const groupedLinks = groupBy(filteredLinks, "section")
     // limit links to section max
@@ -90,18 +89,6 @@ const List = ({ onLoad }) => {
 }
 
 function filterLinks(query, links, highlightedLink) {
-  if (query === "qbo") {
-    const abc = fuzzysort
-      .go(query, links, {
-        keys: ["name", "alias"],
-        all: true,
-      })
-      .map((link) => ({
-        ...link.obj,
-        score: link.score,
-      }))
-    console.log(abc)
-  }
   return fuzzysort
     .go(query, links, {
       keys: ["name", "alias"],

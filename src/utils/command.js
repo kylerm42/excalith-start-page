@@ -24,6 +24,7 @@ export function runCommand(command, settings, links, highlightedLink) {
 
     executeSearch(query, engine)
   } else {
+    console.log("searching...?")
     executeSearch(
       command,
       settings.search.engines.find((e) => e.default)
@@ -32,7 +33,7 @@ export function runCommand(command, settings, links, highlightedLink) {
 }
 
 function executeSearch(query, engine) {
-  openLink(engine.url.replace("{}", query), engine.target || "_self")
+  openLink({ url: engine.url.replace("{}", query), target: engine.target || "_self" })
 }
 
 function openLink(link) {
