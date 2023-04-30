@@ -7,7 +7,7 @@ const Link = ({ linkData }) => {
   return (
     <li className="-my-2 -ml-3">
       <a
-        className={`inline-block xrank-${rank} ml-2 leading-2 my-1 px-1 rounded-selection ${
+        className={`inline-flex items-center w-full xrank-${rank} ml-2 leading-2 my-1 px-1 rounded-selection ${
           isSelected ? "selected" : ""
         }`}
         href={url}
@@ -17,7 +17,9 @@ const Link = ({ linkData }) => {
         <span className="inline-block w-4 h-4 align-middle">
           <Icon icon={icon} />
         </span>
-        <span className="inline-block pl-2 font-light leading-8 align-middle">{name}</span>
+        <span className="pl-2 font-light leading-8 align-middle text-ellipsis overflow-hidden whitespace-nowrap">
+          {name}
+        </span>
       </a>
     </li>
   )

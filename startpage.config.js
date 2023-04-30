@@ -338,17 +338,12 @@ const defaultConfig = {
         {
           name: "Synchrony - Amazon",
           url: "https://amazon.syf.com/login/",
-          icon: "cib:chase",
+          icon: "ic:round-credit-card",
         },
         {
           name: "Synchrony - Newegg/Lovesac",
           url: "https://www.mysynchrony.com/",
-          icon: "cib:chase",
-        },
-        {
-          name: "PenFed",
-          url: "https://www.penfed.org/login",
-          icon: "cib:chase",
+          icon: "ic:round-credit-card",
         },
       ],
     },

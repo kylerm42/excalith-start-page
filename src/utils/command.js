@@ -16,7 +16,7 @@ export function runCommand(command, settings, links, highlightedLink) {
   } else if (links.map((l) => l.alias).includes(command)) {
     const link = links.find((link) => link.alias === command)
     openLink(link.url, link.target)
-  } else if (links[0].score === 0) {
+  } else if (links[0]?.score === 0) {
     openLink(links[0].url, links[0].target)
   } else if (
     settings.search.engines.filter((shortcut) => command.startsWith(`${shortcut.alias} `)).length
