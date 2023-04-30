@@ -150,6 +150,33 @@ const defaultConfig = {
           icon: "tabler:brand-walmart",
           alias: "wm",
         },
+        {
+          name: "Icons",
+          url: "https://icon-sets.iconify.design/",
+          icon: "fa6-solid:icons",
+        },
+        {
+          name: "Maps",
+          url: "https://www.google.com/maps/",
+          icon: "mdi:map-search",
+        },
+        {
+          name: "Calendar",
+          url: "https://calendar.google.com/calendar/u/1/r",
+          icon: "material-symbols:calendar-month",
+          alias: "cal",
+        },
+        {
+          name: "Daily",
+          urls: [
+            "https://app.plex.tv/desktop/#!/",
+            "https://overseerr.l.talos.one/requests",
+            "https://radarr.l.talos.one/activity/history",
+            "https://sonarr.l.talos.one/activity/history",
+            "https://app.ynab.com/",
+          ],
+          icon: "mdi:calendar-today",
+        },
       ],
     },
     {
