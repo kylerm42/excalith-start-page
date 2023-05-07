@@ -23,7 +23,7 @@ jobs:
           images: |
             kylerm42/start-page
           tags: |
-            type=schedule,pattern={{date 'YYYY.MM.DD.HHmm'}}
+            type=schedule,pattern={{date 'YYYY.MM.DD.HHmm'}},value=latest,enable=true
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
