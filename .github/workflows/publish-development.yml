@@ -16,6 +16,18 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v3
 
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+            name/app
+            ghcr.io/username/app
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=schedule,pattern={{date 'YYYY.MM.DD.HHmm'}}
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -27,6 +39,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: |
-            kylerm42/start-page:$(date +'%Y.%m.%d.%H%M')
-            kylerm42/start-page:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
