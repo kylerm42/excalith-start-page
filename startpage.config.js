@@ -204,13 +204,13 @@ const defaultConfig = {
         },
         {
           name: "QBO Sync",
-          url: "https://github.com/AviseInc/qbo-sync-service",
+          url: "https://github.com/AviseInc/qbo-sync",
           icon: "material-symbols:sync-rounded",
           alias: "qsync",
         },
         {
           name: "Codat Sync",
-          url: "https://github.com/AviseInc/codat-sync-service",
+          url: "https://github.com/AviseInc/codat-sync",
           icon: "material-symbols:sync-rounded",
           alist: "csync",
         },
