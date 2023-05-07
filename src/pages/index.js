@@ -10,7 +10,7 @@ export default function Home() {
   const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
-    const info = `\u00A9 2022-${new Date().getFullYear()} Can Cellek\n\nStart Page designed by Can Cellek\nCheck out the source code at\nhttps://github.com/excalith/excalith-start-page`
+    const info = `\u00A9 2022-${new Date().getFullYear()} KRM\n\nStart Page originally designed by Can Cellek, modified by KRM\nCheck out the source code at\nhttps://github.com/kylerm42/excalith-start-page`
     console.log(info)
   }, [])
 

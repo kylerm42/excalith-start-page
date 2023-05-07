@@ -14,39 +14,57 @@ export const SettingsProvider = ({ children }) => {
   const [settings, setSettings] = useState()
 
   useEffect(() => {
-    const settings = localStorage.getItem(SETTINGS_KEY)
+    const settings = defaultConfig.usLocalStorage && localStorage.getItem(SETTINGS_KEY)
     if (settings && settings !== "undefined") {
       try {
         const jsonSettings = JSON.parse(settings)
-        const links = jsonSettings.sections.flatMap((section) => {
-          return section.links.map((link) => ({
-            ...link,
-            section: section.title,
-          }))
-        })
-        setSettings({ ...jsonSettings, links })
+        setSettings(prepareConfig(jsonSettings))
       } catch (e) {
-        setSettings(defaultConfig)
+        setSettings(prepareConfig(defaultConfig))
         console.log("Error parsing settings, resetting to default")
       }
     } else {
-      setSettings(defaultConfig)
+      setSettings(prepareConfig(defaultConfig))
     }
   }, [])
 
   useEffect(() => {
     if (settings && settings !== "undefined") {
-      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings))
+      setLocalStorage(SETTINGS_KEY, JSON.stringify(settings))
     }
   }, [settings])
 
-  const updateSettings = async (newSettings) => {
-    await setSettings(newSettings)
+  const updateSettings = (newSettings) => {
+    setSettings(prepareConfig(newSettings))
   }
 
   const resetSettings = () => {
-    setSettings(defaultConfig)
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(defaultConfig))
+    setSettings(prepareConfig(defaultConfig))
+    setLocalStorage(SETTINGS_KEY, JSON.stringify(defaultConfig))
+  }
+
+  const setLocalStorage = (key, value) => {
+    if (defaultConfig.usLocalStorage) {
+      localStorage.setItem(key, value)
+    }
+  }
+
+  const prepareConfig = (settings) => {
+    const links = settings.sections.flatMap((section) => {
+      return section.links.map((link) => ({
+        ...link,
+        section: section.title,
+      }))
+    })
+    const defaults = {
+      MAX_SEARCH_RESULTS: 10,
+      SECTION_DEFAULTS: {
+        maxLinks: 5,
+        align: "left",
+      },
+    }
+
+    return { ...settings, ...defaults, links }
   }
 
   return (

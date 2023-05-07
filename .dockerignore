@@ -3,6 +3,7 @@ Dockerfile
 .next
 .git
 .github
+.eslintrc.*
 node_modules
 npm-debug.log
 README.md

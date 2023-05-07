@@ -1,68 +1,47 @@
 import { isURL } from "@/utils/isURL"
-import { openLink } from "@/utils/openLink"
 import { publish } from "@/utils/event"
+import { some } from "lodash"
 
 const registeredCommands = ["list", "help", "fetch", "config"]
 
-export function RunCommand(command, settings) {
-  if (command === "") return false
+export function runCommand(command, settings, links, highlightedLink) {
   const cmd_split = command.split(" ")
 
-  if (registeredCommands.includes(cmd_split[0])) {
+  if (highlightedLink >= 0) {
+    openLink(links[highlightedLink])
+  } else if (registeredCommands.includes(cmd_split[0])) {
     publish("command", cmd_split)
   } else if (isURL(command)) {
-    openLink("https://" + command, settings.urlLaunch.target)
-  } else if (tryParseSearchShortcut(command, settings)) {
-    return
+    openLink({ url: "https://" + command, target: settings.urlLaunch.target })
+  } else if (links.map((l) => l.alias).includes(command)) {
+    const link = links.find((link) => link.alias === command)
+    openLink(link)
+  } else if (links[0]?.score === 0) {
+    openLink(links[0])
+  } else if (some(settings.search.engines, (engine) => command.startsWith(`${engine.alias} `))) {
+    const engine = settings.search.engines.find((e) => command.startsWith(`${e.alias} `))
+    const query = command.replace(`${engine.alias} `, "")
+
+    executeSearch(query, engine)
   } else {
-    openFilteredLinks(command, settings)
+    console.log("searching...?")
+    executeSearch(
+      command,
+      settings.search.engines.find((e) => e.default)
+    )
   }
 }
 
-function openFilteredLinks(command, settings) {
-  let filteredUrls = []
-  settings.sections.map((section) => {
-    {
-      section.links.map((link) => {
-        {
-          if (link.name.toLowerCase().includes(command)) {
-            filteredUrls.push(link.url)
-          }
-        }
-      })
-    }
-  })
-
-  let filterCount = filteredUrls.length
-  if (filterCount === 0) {
-    const defaultSerachEngine = settings.search.default
-    const target = settings.search.target
-    openLink(defaultSerachEngine + command, target)
-  } else {
-    filteredUrls.map((url, index) => {
-      openLink(url, index === filterCount - 1 ? "_self" : "_blank")
-    })
-  }
+function executeSearch(query, engine) {
+  openLink({ url: engine.url.replace("{}", query), target: engine.target || "_self" })
 }
 
-function tryParseSearchShortcut(command, settings) {
-  // Split command and query seperated by shortcut regex
-  var commandPattern = new RegExp(settings.search.shortcutRegex, "g")
-  let matchAll = command.matchAll(commandPattern)
-  matchAll = Array.from(matchAll)
-
-  if (matchAll.length === 0) return false
-
-  let regex_cmd = matchAll[0]
-  for (var i = 0; i < settings.search.shortcuts.length; i++) {
-    const commandData = settings.search.shortcuts[i]
-    const name = commandData.alias
-
-    if (name === regex_cmd[1]) {
-      const url = commandData.url
-      openLink(url.replace("{}", regex_cmd[2]), settings.urlLaunch.target)
-      return true
-    }
+function openLink(link) {
+  if (link.url) {
+    window.open(link.url, link.target || "_self", "noopener noreferrer")
+  } else if (link.urls) {
+    link.urls.forEach((url, index, urls) =>
+      window.open(url, index === urls.length - 1 ? "_self" : "_blank", "noopener noreferrer")
+    )
   }
-  return false
 }
