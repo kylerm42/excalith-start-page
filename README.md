@@ -1,5 +1,5 @@
 <div align="center">
-	<h1 align="center">Excalith Start Page</h1>
+	<h1 align="center">Fork of Excalith Start Page</h1>
 	<img src=".github/startpage.gif" />
 
 This is an interactive start page for browsers, inspired from my terminal setup.
@@ -10,6 +10,11 @@ This is an interactive start page for browsers, inspired from my terminal setup.
 [![Docker Version (latest semver)](https://img.shields.io/docker/v/excalith/start-page?sort=semver&label=docker)](https://hub.docker.com/r/excalith/start-page)
 
 </div>
+
+## Changes in this fork
+- Fuzzy search, link results are odered by closest match
+- Sections can have unlimited links, but only display some (default 5)
+- Links can have an alias to match on
 
 ## Demo
 
